@@ -1,0 +1,36 @@
+port=0
+
+user=dnsmasq
+group=dnsmasq
+
+# DHCP pool setup
+dhcp-range=10.0.0.151,10.0.0.200,12h
+dhcp-option=option:router,10.0.0.1
+dhcp-option=option:dns-server,10.0.0.1
+
+# Static mappings
+dhcp-host=00:07:21:ad:55:f8,10.0.0.101,k8s-master01,infinite
+dhcp-host=00:07:21:ad:53:9a,10.0.0.102,k8s-master02,infinite
+dhcp-host=00:07:21:ae:0c:67,10.0.0.103,k8s-master03,infinite
+
+dhcp-host=00:07:21:ab:8e:c8,10.0.0.104,k8s-n01,infinite
+dhcp-host=00:07:21:ab:8e:72,10.0.0.105,k8s-n02,infinite
+dhcp-host=00:07:21:ab:8e:ac,10.0.0.106,k8s-n03,infinite
+
+dhcp-host=cc:00:ff:ff:ee:ee,192.168.100.109,k8s-test01,infinite
+
+dhcp-match=set:efi-x86_64,option:client-arch,7
+
+# dhcp-boot=tag:efi-x86_64,shim.efi
+dhcp-boot=tag:efi-x86_64,ipxe.efi
+
+dhcp-userclass=set:ipxe,iPXE
+dhcp-boot=tag:ipxe,http://bootserver:8080/boot.ipxe
+
+# TFTP Server setup
+enable-tftp
+tftp-root=/var/lib/tftpboot
+
+log-queries
+log-dhcp
+conf-dir=/etc/dnsmasq.d,.rpmnew,.rpmsave,.rpmorig

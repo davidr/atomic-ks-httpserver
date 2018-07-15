@@ -1,0 +1,35 @@
+text
+install
+reboot
+
+sshpw --username root --plaintext installpw
+
+auth --enableshadow --passalgo=sha512
+ostreesetup --nogpg --osname="fedora-atomic" --remote="fedora-atomic" --url="file:///ostree/repo" --ref="fedora/28/x86_64/atomic-host"
+
+ignoredisk --only-use=mmcblk0
+keyboard us
+lang en_US.UTF-8
+
+network  --bootproto=static --device=enp2s0 --ip={{.IpAddr}} --netmask=255.255.255.0 --hostname={{.HostName}} --gateway={{.Router}} --nameserver {{.NameServer}}
+
+logging --host 10.0.0.10 --level debug
+
+rootpw --iscrypted PASSWORD_CRYPT
+
+timezone America/Chicago --isUtc
+
+user --groups=wheel --name=atomic --password=PASSWORD_CRYPT --iscrypted --gecos="Atomic User"
+
+sshkey --username root "SSH_KEY_1"
+sshkey --username atomic "SSH_KEY_2"
+
+bootloader --location=mbr --boot-drive=mmcblk0
+clearpart --all --initlabel --drives=mmcblk0
+autopart --noswap --fstype="xfs"
+
+%post --erroronfail
+rm -f /etc/ostree/remotes.d/fedora-atomic.conf
+ostree remote add --set=gpgkeypath=/etc/pki/rpm-gpg/RPM-GPG-KEY-fedora-28-primary fedora-atomic https://kojipkgs.fedoraproject.org/atomic/repo
+cp /etc/skel/.bash* /root
+%end
