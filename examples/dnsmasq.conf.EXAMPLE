@@ -17,6 +17,8 @@ dhcp-host=00:07:21:ab:8e:c8,10.0.0.104,k8s-n01,infinite
 dhcp-host=00:07:21:ab:8e:72,10.0.0.105,k8s-n02,infinite
 dhcp-host=00:07:21:ab:8e:ac,10.0.0.106,k8s-n03,infinite
 
+dhcp-host=cc:00:ff:ff:ee:ee,192.168.100.109,k8s-test01,infinite
+
 dhcp-match=set:efi-x86_64,option:client-arch,7
 
 # dhcp-boot=tag:efi-x86_64,shim.efi

@@ -11,7 +11,7 @@ ignoredisk --only-use=mmcblk0
 keyboard us
 lang en_US.UTF-8
 
-network  --bootproto=static --device=enp2s0 --ip={{.IpAddr}} --netmask=255.255.255.0 --hostname={{.HostName}} --gateway=10.0.0.1 --nameserver 10.0.0.1
+network  --bootproto=static --device=enp2s0 --ip={{.IpAddr}} --netmask=255.255.255.0 --hostname={{.HostName}} --gateway={{.Router}} --nameserver {{.NameServer}}
 
 logging --host 10.0.0.10 --level debug
 
